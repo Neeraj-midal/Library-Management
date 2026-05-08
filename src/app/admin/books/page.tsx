@@ -1,15 +1,31 @@
-
-
 "use client";
 
 import AddBook from "@/components/forms/AddBook";
 import { useEffect, useState } from "react";
 import { Book } from "@/types/book.types";
 import { getBooks } from "@/services/book.service";
+import axios from "axios";
 
 export default function BooksPage() {
   const [books, setBooks] = useState<Book[]>([]);
+
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBooks();
+  }, [search]);
+
+  const fetchBooks = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/api/books/search?keyword=${search}`,
+      );
+      setBooks(res.data.books);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getBooks()
@@ -46,6 +62,12 @@ export default function BooksPage() {
 
         {/* RIGHT: TABLE */}
         <div className="col-span-12 lg:col-span-8">
+          <input
+            type="test"
+            placeholder="Search Books"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-4">
             {/* Table Header */}
             <div className="flex items-center justify-between mb-4">
