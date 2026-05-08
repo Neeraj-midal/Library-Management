@@ -1,0 +1,9 @@
+{
+    "hero":"/hero/library-main.jpg",
+    "about":"/hero/library-reading.jpg",
+    "gallery":[
+        "/gallery/g1.jpg",
+          "/gallery/g2.jpg",
+            "/gallery/g3.jpg"
+    ]
+}
